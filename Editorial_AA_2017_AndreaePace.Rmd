@@ -40,7 +40,7 @@ analgesic adjuvants, postoperative pain, meta-analysis, Bayesian statistics
 # https://cran.r-project.org/web/packages/pacman/vignettes/Introduction_to_pacman.html
 
 if (!require("pacman")) install.packages("pacman")
-pacman::p_load()
+pacman::p_load(knitr, ggplot2, readxl)
 
 ```
 
@@ -115,7 +115,7 @@ library(readxl) # read excel file
 Acetaminophen <- read_excel("data/Acetaminophen.xlsx")
 Acetaminophen <- Acetaminophen[-1,] #drop the empty first line
 Acetaminophen$Adjuvant <- rep("Acetaminophen",dim(Acetaminophen)[1])
-save(Acetaminophen, file = "data/Acetaminophen.Rdata") #drop the empty first line
+save(Acetaminophen, file = "results/Acetaminophen.Rdata") #drop the empty first line
 
 NSAIDS2 <- read_excel("data/NSAIDS2.xlsx")
 NSAIDS2 <- NSAIDS2[-1,] #drop the empty first line
@@ -125,7 +125,7 @@ save(NSAIDS2, file = "data/NSAIDS2.Rdata")
 Alpha_2 <- read_excel("data/Alpha-2.xlsx")
 Alpha_2 <- Alpha_2[-1,] #drop the empty first line
 Alpha_2$Adjuvant <- rep("Alpha_2",dim(Alpha_2)[1]) 
-save(Alpha_2, file = "data/Alpha_2.Rdata")
+save(Alpha_2, file = "results/Alpha_2.Rdata")
 
 ## Combine all three sets into one
 AllAdjuvants <- rbind(Acetaminophen, NSAIDS2, Alpha_2)
@@ -133,12 +133,12 @@ AllAdjuvants <- rbind(Acetaminophen, NSAIDS2, Alpha_2)
 AllAdjuvants$Surgery <- as.factor(AllAdjuvants$`Type of surgery`)
 AllAdjuvants$Agent <- as.factor(AllAdjuvants$Adjuvant)
 
-save(AllAdjuvants, file= "data/AllAdjuvants.Rdata")
+save(AllAdjuvants, file= "results/AllAdjuvants.Rdata")
 rm(list=ls())
 ```
 
 ```{r LoadData, eval=TRUE, include=FALSE}
-load(file = "data/Alladjuvants.Rdata")
+load(file = "results/Alladjuvants.Rdata")
 str(AllAdjuvants)
 ```
 
