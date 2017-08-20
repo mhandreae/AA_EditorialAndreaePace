@@ -4,7 +4,7 @@ csl: Bibliography/anesthesia-and-analgesia.csl
 fontfamily: pslatex
 output:
   word_document:
-    reference_docx: mystylesEditorial.docx
+    reference_docx: Styles/mystylesEditorial.docx
   pdf_document: default
 bibliography: Bibliography/Editorial_Bibliography.bib
 ---
@@ -33,7 +33,7 @@ analgesic adjuvants, postoperative pain, meta-analysis, Bayesian statistics
 \newpage
 \setlength{\parindent}{0ex}
 
-```{r, check_install_libraries, echo=FALSE}
+```{r, check_install_libraries, echo=FALSE, message=FALSE}
 # This chunk will check if all requiered libaries are installed 
 # and install the missing libraries
 
