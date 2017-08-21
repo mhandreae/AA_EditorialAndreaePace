@@ -164,4 +164,10 @@ ggsave("Schematic.tif", device = "tiff", width = 6,
 ### Figure 2 Caption
 In Figure 2, we reproduce the acetaminophen subplot of Figure 2 of Doleman et al. Each study is represented by a dot. We coded and colored the studies by surgical procedure, according to the adjacent legend. If surgery were the best way to explain why studies yield different results, then studies investigating the same surgical procedure should have similar effects. Hence the same shape (and color) dots should be clumped together, (and the green-square-box cholecystectomy studies somewhat are).  But most studies of the same color are far apart, for example orthopedic (violet-star) or hysterectomy (blue-cross-in-box) study dots are spread out over the entire range of the plot. By contrast, most studies line up neatly around the blue regression line, when we regress the mean reduction in morphine consumption (y-axis) against the baseline risk (baseline morphine consumption in the control group) in the x-axis. The conclusion is that a meta-regression controlling for baseline morphine consumption in the control group is superior to stratification by surgery in explaining between study variance in results.
 
+## Figure 3
+
+![Placeholder for Figure 3](Figs/apple.png)
+
+### Figure 3 Caption
+
 # References
