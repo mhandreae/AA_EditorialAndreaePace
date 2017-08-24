@@ -1,0 +1,237 @@
+---
+title: \normalsize Figures for Editorial A Novel Approach to Synthesize the Evidence on Analgesic Adjuvants for Postoperative Pain
+csl: Bibliography/anesthesia-and-analgesia.csl
+fontfamily: pslatex
+output:
+  word_document:
+    reference_docx: Styles/mystylesEditorial.docx
+  pdf_document: default
+bibliography: Bibliography/Editorial_Bibliography.bib
+---
+
+\setlength{\parindent}{0ex}
+
+##### Authors
+
+Michael H. Andreae, M.D., Department of Anesthesiology & Perioperative Medicine, H187, Penn State Health Milton S. Hershey Medical Center, Penn State College of Medicine, Hershey. PA
+
+Nathan L Pace, MD., MStat., Department of Anesthesiology, University of Utah, Salt Lake City, UT
+
+##### Corresponding author:
+Michael Andreae, MD, Address: Department of Anesthesiology, Department of Anesthesiology, Penn State Health Milton S. Hershey Medical Center, 500 University Drive, Hershey. PA 17033, Tel: +1 (717) 531 6140, Email: mandreae@pennstatehealth.psu.edu
+
+##### Acknowledgement
+
+We would like to acknowledge Doleman et al for providing the data to generate the figures.
+
+##### Conflicts of Interest: None
+**Number of words in this Editorial (1598), Figures (2)**
+
+##### Keywords:
+analgesic adjuvants, postoperative pain, meta-analysis, Bayesian statistics
+
+\newpage
+\setlength{\parindent}{0ex}
+
+```{r, check_install_libraries, echo=FALSE, message=FALSE, eval=TRUE}
+# This chunk will check if all requiered libaries are installed 
+# and install the missing libraries
+
+# https://cran.r-project.org/web/packages/pacman/vignettes/Introduction_to_pacman.html
+
+## Option 1
+if (!require("pacman")) install.packages("pacman", repos='http://cran.us.r-project.org')
+pacman::p_load(knitr, ggplot2, readxl, magrittr, forcats, tidyverse, meta, metafor, scales, ellipse)
+
+## Option 2, 
+### if option one causes an error, comment option one and uncomment option 2:
+
+# if (!require("knitr")) install.packages("knitr", repos='http://cran.us.r-project.org')
+# if (!require("ggplot2")) install.packages("ggplot2", repos='http://cran.us.r-project.org')
+# if (!require("readxl")) install.packages("readxl", repos='http://cran.us.r-project.org')
+
+## Option 3
+### if option 1 and option 2 both throw an error, then:
+
+# install the packages knitr, ggplot2, readxl manuallyand 
+# set "eval=FALSE"" for this chunk above in the top line
+
+
+```
+
+```{r, global_options, echo=FALSE}
+suppressWarnings(library(knitr))
+# set options
+opts_chunk$set(fig.width=8, fig.height=4, fig.path='Figs/',
+               echo=FALSE, warning=FALSE, message=FALSE)
+eval_everything=FALSE
+```
+
+
+\newpage
+
+\setlength\parindent{0pt}
+
+
+# Figures
+
+## Figure 1
+
+![Figure 1](./Figs/AcetaminophenForestPlot.gif)
+
+
+### Figure 1 Caption
+
+Estimates for the mean reduction of morphine equivalent afforded by acetaminophen are shown in a classical forest plot with studies grouped by surgical interventions. The mean reduction of morphine equivalents and their 95% confidence intervals were provided by Doleman et al.. The later were used to estimate the standard error (Higgins 2011). The figure was produced with the Cochrane Collaboration software RevMan (RevMan 2014). The 25 RCTs have inconsistent effects for the drug under investigation (acetaminophen), varying widely even within the same surgery.
+
+```{r GlobalLibraries}
+library(ggplot2)
+```
+
+```{r ImportData, eval=FALSE}
+library(readxl) # read excel file
+
+Acetaminophen <- read_excel("data/Acetaminophen.xlsx")
+Acetaminophen <- Acetaminophen[-1,] #drop the empty first line
+Acetaminophen$Adjuvant <- rep("Acetaminophen",dim(Acetaminophen)[1])
+save(Acetaminophen, file = "results/Acetaminophen.Rdata") #drop the empty first line
+
+NSAIDS2 <- read_excel("data/NSAIDS2.xlsx")
+NSAIDS2 <- NSAIDS2[-1,] #drop the empty first line
+NSAIDS2$Adjuvant <- rep("NSAIDS2",dim(NSAIDS2)[1])
+save(NSAIDS2, file = "data/NSAIDS2.Rdata")
+
+Alpha_2 <- read_excel("data/Alpha-2.xlsx")
+Alpha_2 <- Alpha_2[-1,] #drop the empty first line
+Alpha_2$Adjuvant <- rep("Alpha_2",dim(Alpha_2)[1]) 
+save(Alpha_2, file = "results/Alpha_2.Rdata")
+
+## Combine all three sets into one
+AllAdjuvants <- rbind(Acetaminophen, NSAIDS2, Alpha_2)
+# factorize surgery type and adjuvant 
+AllAdjuvants$Surgery <- as.factor(AllAdjuvants$`Type of surgery`)
+AllAdjuvants$Agent <- as.factor(AllAdjuvants$Adjuvant)
+
+save(AllAdjuvants, file= "results/AllAdjuvants.Rdata")
+rm(list=ls())
+```
+
+```{r LoadData, eval=TRUE, include=FALSE}
+load(file = "results/Alladjuvants.Rdata")
+str(AllAdjuvants)
+```
+
+## Figure 2
+
+```{r DraftFigure}
+# assign only the Acetaminophen data to ggplot object ggData
+ggData <- ggplot(AllAdjuvants[AllAdjuvants$Agent=="Acetaminophen",], aes(x=X,y=Y))
+# make a Scatter plot and assign it to Fig a, including a regression line with confidence intervals and a line marking 50mg morphine consumption
+
+Fig_a <- ggData +geom_point(aes(shape=Surgery, colour=Surgery)) +geom_smooth(method='lm',formula=y~x) + geom_vline(xintercept = 50)
+
+# add labels
+Fig_b <- Fig_a + labs(x = "baseline morphine consumption in control group [mg]", y = "morphine-equivalent reduction [mg]")
+
+# choose a simple background and render
+Fig_b + theme_bw() # choose a simple background and render
+ggsave("Schematic.tif", device = "tiff", width = 6, 
+       height = 3, units = "in", dpi = 400)
+
+```
+
+### Figure 2 Caption
+In Figure 2, we reproduce the acetaminophen subplot of Figure 2 of Doleman et al. Each study is represented by a dot. We coded and colored the studies by surgical procedure, according to the adjacent legend. If surgery were the best way to explain why studies yield different results, then studies investigating the same surgical procedure should have similar effects. Hence the same shape (and color) dots should be clumped together, (and the green-square-box cholecystectomy studies somewhat are).  But most studies of the same color are far apart, for example orthopedic (violet-star) or hysterectomy (blue-cross-in-box) study dots are spread out over the entire range of the plot. By contrast, most studies line up neatly around the blue regression line, when we regress the mean reduction in morphine consumption (y-axis) against the baseline risk (baseline morphine consumption in the control group) in the x-axis. The conclusion is that a meta-regression controlling for baseline morphine consumption in the control group is superior to stratification by surgery in explaining between study variance in results.
+
+## Figure 3
+
+```{r, generateFigure3}
+
+RoM.df <- read_excel("data/RoM.xlsx", sheet = 1, col_names = T)
+
+MV.df <- RoM.df %>%
+  mutate(baseline = meanCtl, surgery = as_factor(surgery)) %>%
+  filter(!is.na(sdExp))
+
+surgery.df <- MV.df %>%
+  select(studyName, surgery)
+
+arm.df <- bind_rows(MV.df %>%
+                      select(studyName, meanExp, sdExp, nExp) %>%
+                      rename(mean = meanExp, sd = sdExp, n = nExp) %>%
+                      mutate(group = 'Exp'),
+                    MV.df %>%
+                      select(studyName, meanCtl, sdCtl, nCtl) %>%
+                      rename(mean = meanCtl, sd = sdCtl, n = nCtl) %>%
+                      mutate(group = 'Ctl')) %>%
+  mutate(group = as_factor(group))
+  
+arm.df <- escalc(measure = 'MNLN', mi = mean, sdi = sd, ni = n, data = arm.df)
+
+arm.rma <- rma.mv(yi = yi, V = vi, mods = ~ group - 1,
+                  random = ~ group | studyName,
+                  struct = 'UN', method = 'ML',
+                    data = arm.df)
+
+armplot.df <- full_join(arm.df %>%
+                          filter(group == 'Exp') %>% 
+                          select(studyName, yi, vi) %>%
+                          rename(Expyi = yi, Expvi = vi),
+                        arm.df %>%
+                          filter(group == 'Ctl') %>% 
+                          select(studyName, yi, vi) %>%
+                          rename(Ctlyi = yi, Ctlvi = vi),
+                        by = 'studyName')
+armplot.df <- full_join(armplot.df, surgery.df, by = 'studyName')
+
+armplot.df <- armplot.df %>%
+  mutate(wi = sqrt(1 / (Expvi + Ctlvi)))
+
+r <- with(arm.rma, G["Exp","Ctl"] / sqrt(G["Exp","Exp"] * G["Ctl","Ctl"]))
+b1 <- with(arm.rma, G['Exp', 'Ctl'] / G['Ctl', 'Ctl'])
+se.b1 <- sqrt(with(arm.rma, G["Exp","Exp"]/G["Ctl","Ctl"] *
+                     (1-r^2) / (arm.rma$g.levels.comb.k - 2)))
+b0 <- as.vector(coef(arm.rma)[1] - coef(arm.rma)[2] * b1)
+
+tau2 <- arm.rma$G[1, 1] + arm.rma$G[2, 2] - 2 * arm.rma$G[1, 2]
+
+tau2.cond <- arm.rma$G[1, 1] - arm.rma$G[1, 2]^2/arm.rma$G[2, 2]
+
+center.df <- data.frame(x = coef(arm.rma)[2], y = coef(arm.rma)[1])
+
+xy.df <- data.frame(ellipse(arm.rma$G, centre=coef(arm.rma), level=.95, npoints = 10000))
+                        
+figure3 <- ggplot(data = armplot.df) +
+  geom_point(aes(x  = Ctlyi, y = Expyi, colour = surgery, size = wi)) +
+  scale_size_area(max_size = 6) +
+  guides(fill = guide_legend(title = NULL)) +
+  geom_abline(slope = b1, intercept = b0, size = 1.5) +
+  geom_abline(slope = 1, intercept = 0, linetype = 'dashed', size = 1) +
+  geom_point(data = center.df, aes(x = x, y = y), colour = 'green', size = 10) +
+  scale_x_continuous(labels = math_format(exp^.x)) +
+  scale_y_continuous(labels = math_format(exp^.x)) +
+  xlab('Control Group Dose') +
+  ylab('Acetaminophen Group Dose') +
+  geom_point(data = xy.df,
+             aes(x = Ctl, y = Exp, alpha = 0.1, size = 1, colour = 'grey', fill = Ctl)) +
+  guides(fill = guide_legend(title = NULL)) +
+    theme(legend.position = 'none')
+
+save(figure3, file="Figs/Figure3.Rdata")
+```
+
+
+```{r, Figure3, fig.width=16, fig.height=8, eval=TRUE}
+# choose a simple background and render
+figure3 + theme_bw() # choose a simple background and render
+
+
+```
+
+
+### Figure 3 Caption
+
+L'Abbe plot investigates the heterogeneity between studies using the ratio of means, as a *relative* measure, plotting the mean in the experimental versus the control group for each study, (on the logarithmic scale). Studies are color coded by surgery group and sized by the weight studies were given in the meta-regression. Studies below the dashed diagonal demonstrated benefit. Studies are sprayed around the black regression line, which has almost a slope of one, as this meta-regression explains only 2% of the between study variability. Hence baseline risk does not explain between-study differences in mean morphine reductions, when outcomes are expressed as a ratio of means.
+
+
+# References
