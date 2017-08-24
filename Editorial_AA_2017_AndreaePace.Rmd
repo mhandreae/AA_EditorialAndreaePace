@@ -181,7 +181,7 @@ In Figure 2, we reproduce the acetaminophen subplot of Figure 2 of Doleman et al
 
 ```{r}
 
-RoM.df <- read_excel(path = 'data/RoM.xlsx', sheet = 1, col_names = T)
+RoM.df <- read_excel("data/RoM.xlsx", sheet = 1, col_names = T)
 
 MV.df <- RoM.df %>%
   mutate(baseline = meanCtl, surgery = as_factor(surgery)) %>%
@@ -253,7 +253,7 @@ ggplot(data = armplot.df) +
 
 
 ```
-![Placeholder for Figure 3](Figs/apple.png)
+
 
 ### Figure 3 Caption
 
