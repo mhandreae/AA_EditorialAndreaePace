@@ -251,6 +251,7 @@ figure3 <- ggplot(data = armplot.df) +
   guides(fill = guide_legend(title = NULL)) +
     theme(legend.position = 'none')
 
+save(figure3, file="Figs/Figure3.Rdata")
 
 ```
 
