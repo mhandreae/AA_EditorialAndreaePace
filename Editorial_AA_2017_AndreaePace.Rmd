@@ -253,9 +253,14 @@ figure3 <- ggplot(data = armplot.df) +
 
 save(figure3, file="Figs/Figure3.Rdata")
 
+figure3
+
 ```
 
 
 ### Figure 3 Caption
+
+L'Abbe plot investigates the heterogeneity between studies using the ratio of means, as a *relative* measure, plotting the mean in the experimental versus the control group for each study, (on the logarithmic scale). Studies are color coded by surgery group and sized by the weight studies were given in the meta-regression. Studies below the dashed diagonal demonstrated benefit. Studies are sprayed around the black regression line, which has almost a slope of one, as this meta-regression explains only 2% of the between study variability. Hence baseline risk does not explain between-study differences in mean morphine reductions, when outcomes are expressed as a ratio of means.
+
 
 # References
