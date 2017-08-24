@@ -41,7 +41,7 @@ analgesic adjuvants, postoperative pain, meta-analysis, Bayesian statistics
 
 ## Option 1
 if (!require("pacman")) install.packages("pacman", repos='http://cran.us.r-project.org')
-pacman::p_load(knitr, ggplot2, readxl)
+pacman::p_load(knitr, ggplot2, readxl, magrittr, forcats, tidyverse, meta, metafor, scales, ellipse)
 
 ## Option 2, 
 ### if option one causes an error, comment option one and uncomment option 2:
@@ -179,7 +179,81 @@ In Figure 2, we reproduce the acetaminophen subplot of Figure 2 of Doleman et al
 
 ## Figure 3
 
-![L'Abbe Plot](Figs/Figure3.png)
+```{r}
+
+RoM.df <- read_excel(path = 'data/RoM.xlsx', sheet = 1, col_names = T)
+
+MV.df <- RoM.df %>%
+  mutate(baseline = meanCtl, surgery = as_factor(surgery)) %>%
+  filter(!is.na(sdExp))
+
+surgery.df <- MV.df %>%
+  select(studyName, surgery)
+
+arm.df <- bind_rows(MV.df %>%
+                      select(studyName, meanExp, sdExp, nExp) %>%
+                      rename(mean = meanExp, sd = sdExp, n = nExp) %>%
+                      mutate(group = 'Exp'),
+                    MV.df %>%
+                      select(studyName, meanCtl, sdCtl, nCtl) %>%
+                      rename(mean = meanCtl, sd = sdCtl, n = nCtl) %>%
+                      mutate(group = 'Ctl')) %>%
+  mutate(group = as_factor(group))
+  
+arm.df <- escalc(measure = 'MNLN', mi = mean, sdi = sd, ni = n, data = arm.df)
+
+arm.rma <- rma.mv(yi = yi, V = vi, mods = ~ group - 1,
+                  random = ~ group | studyName,
+                  struct = 'UN', method = 'ML',
+                    data = arm.df)
+
+armplot.df <- full_join(arm.df %>%
+                          filter(group == 'Exp') %>% 
+                          select(studyName, yi, vi) %>%
+                          rename(Expyi = yi, Expvi = vi),
+                        arm.df %>%
+                          filter(group == 'Ctl') %>% 
+                          select(studyName, yi, vi) %>%
+                          rename(Ctlyi = yi, Ctlvi = vi),
+                        by = 'studyName')
+armplot.df <- full_join(armplot.df, surgery.df, by = 'studyName')
+
+armplot.df <- armplot.df %>%
+  mutate(wi = sqrt(1 / (Expvi + Ctlvi)))
+
+r <- with(arm.rma, G["Exp","Ctl"] / sqrt(G["Exp","Exp"] * G["Ctl","Ctl"]))
+b1 <- with(arm.rma, G['Exp', 'Ctl'] / G['Ctl', 'Ctl'])
+se.b1 <- sqrt(with(arm.rma, G["Exp","Exp"]/G["Ctl","Ctl"] *
+                     (1-r^2) / (arm.rma$g.levels.comb.k - 2)))
+b0 <- as.vector(coef(arm.rma)[1] - coef(arm.rma)[2] * b1)
+
+tau2 <- arm.rma$G[1, 1] + arm.rma$G[2, 2] - 2 * arm.rma$G[1, 2]
+
+tau2.cond <- arm.rma$G[1, 1] - arm.rma$G[1, 2]^2/arm.rma$G[2, 2]
+
+center.df <- data.frame(x = coef(arm.rma)[2], y = coef(arm.rma)[1])
+
+xy.df <- data.frame(ellipse(arm.rma$G, centre=coef(arm.rma), level=.95, npoints = 10000))
+                        
+ggplot(data = armplot.df) +
+  geom_point(aes(x  = Ctlyi, y = Expyi, colour = surgery, size = wi)) +
+  scale_size_area(max_size = 6) +
+  guides(fill = guide_legend(title = NULL)) +
+  geom_abline(slope = b1, intercept = b0, size = 1.5) +
+  geom_abline(slope = 1, intercept = 0, linetype = 'dashed', size = 1) +
+  geom_point(data = center.df, aes(x = x, y = y), colour = 'green', size = 10) +
+  scale_x_continuous(labels = math_format(exp^.x)) +
+  scale_y_continuous(labels = math_format(exp^.x)) +
+  xlab('Control Group Dose') +
+  ylab('Acetaminophen Group Dose') +
+  geom_point(data = xy.df,
+             aes(x = Ctl, y = Exp, alpha = 0.1, size = 1, colour = 'grey', fill = Ctl)) +
+  guides(fill = guide_legend(title = NULL)) +
+    theme(legend.position = 'none')
+
+
+```
+![Placeholder for Figure 3](Figs/apple.png)
 
 ### Figure 3 Caption
 
