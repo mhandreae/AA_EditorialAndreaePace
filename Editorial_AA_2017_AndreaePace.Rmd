@@ -256,16 +256,15 @@ save(figure3, file="Figs/Figure3.Rdata")
 
 
 ```{r, Figure3, fig.width=16, fig.height=8, eval=TRUE}
-# choose a simple background and render
-figure3 + theme_bw() # choose a simple background and render
-
+# choose a simple background and render and render with limits fo x and y axis
+figure3 + theme_bw() + xlim(0.25, 5.77) +ylim(-.105, 5.5) 
 
 ```
 
 
 ### Figure 3 Caption
 
-L'Abbe plot investigates the heterogeneity between studies using the ratio of means, as a *relative* measure, plotting the mean in the experimental versus the control group for each study, (on the logarithmic scale). Studies are color coded by surgery group and sized by the weight studies were given in the meta-regression. Studies below the dashed diagonal demonstrated benefit. Studies are sprayed around the black regression line, which has almost a slope of one, as this meta-regression explains only 2% of the between study variability. Hence baseline risk does not explain between-study differences in mean morphine reductions, when outcomes are expressed as a ratio of means.
+L'Abbe plot investigates the heterogeneity between studies using the ratio of means, as a *relative* measure, plotting the mean in the experimental versus the control group for each study, (on the logarithmic scale). Studies are color coded by surgery group and sized by the weight studies were given in the meta-regression. Studies below the dashed diagonal demonstrated benefit. The ellipse represents the 95% coverage region of teh meta-regression. The green X represents the mean in the experimental and control studies; on average there is a 32% *relative* reduction in morphine consumption in response to acetaminophen. Studies are sprayed around the black regression line. The slope of the regression line of almost 1, indicates that this meta-regression does not explain the between study variability, when outcomes are expressed as a ratio of means.
 
 
 # References
