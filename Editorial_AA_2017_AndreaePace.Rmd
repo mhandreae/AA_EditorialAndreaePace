@@ -179,7 +179,7 @@ In Figure 2, we reproduce the acetaminophen subplot of Figure 2 of Doleman et al
 
 ## Figure 3
 
-```{r}
+```{r, generateFigure3}
 
 RoM.df <- read_excel("data/RoM.xlsx", sheet = 1, col_names = T)
 
@@ -252,8 +252,13 @@ figure3 <- ggplot(data = armplot.df) +
     theme(legend.position = 'none')
 
 save(figure3, file="Figs/Figure3.Rdata")
+```
 
-figure3
+
+```{r, Figure3, fig.width=16, fig.height=8, eval=TRUE}
+# choose a simple background and render
+figure3 + theme_bw() # choose a simple background and render
+
 
 ```
 
