@@ -179,7 +179,7 @@ In Figure 2, we reproduce the acetaminophen subplot of Figure 2 of Doleman et al
 
 ## Figure 3
 
-![Placeholder for Figure 3](Figs/apple.png)
+![L'Abbe Plot](Figs/Figure3.png)
 
 ### Figure 3 Caption
 
