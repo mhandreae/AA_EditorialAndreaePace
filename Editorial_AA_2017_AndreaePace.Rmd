@@ -235,7 +235,7 @@ center.df <- data.frame(x = coef(arm.rma)[2], y = coef(arm.rma)[1])
 
 xy.df <- data.frame(ellipse(arm.rma$G, centre=coef(arm.rma), level=.95, npoints = 10000))
                         
-ggplot(data = armplot.df) +
+figure3 <- ggplot(data = armplot.df) +
   geom_point(aes(x  = Ctlyi, y = Expyi, colour = surgery, size = wi)) +
   scale_size_area(max_size = 6) +
   guides(fill = guide_legend(title = NULL)) +
