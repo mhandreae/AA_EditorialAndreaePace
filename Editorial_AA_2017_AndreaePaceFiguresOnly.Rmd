@@ -1,11 +1,12 @@
 ---
-title: \normalsize Figures for Editorial A Novel Approach to Synthesize the Evidence on Analgesic Adjuvants for Postoperative Pain
+title: \normalsize Figures for Editorial A Novel Approach to Synthesize the Evidence
+  on Analgesic Adjuvants for Postoperative Pain
 csl: Bibliography/anesthesia-and-analgesia.csl
 fontfamily: pslatex
 output:
+  pdf_document: default
   word_document:
     reference_docx: Styles/mystylesEditorial.docx
-  pdf_document: default
 bibliography: Bibliography/Editorial_Bibliography.bib
 ---
 
@@ -225,6 +226,8 @@ save(figure3, file="Figs/Figure3.Rdata")
 # choose a simple background and render with x and y axis limits
 Figure3Final <- figure3 + theme_bw() + xlim(0.25, 5.77) +ylim(-.105, 5.5)  
 ggsave(Figure3Final, file = "Figs/Figure3Final.png", device ="png",
+       scale = 1, width = 8, height = 4,dpi = 300, limitsize = TRUE)
+ggsave(Figure3Final, file = "Figs/Figure3Final.pdf", device ="pdf",
        scale = 1, width = 8, height = 4,dpi = 300, limitsize = TRUE)
 Figure3Final
 ```
