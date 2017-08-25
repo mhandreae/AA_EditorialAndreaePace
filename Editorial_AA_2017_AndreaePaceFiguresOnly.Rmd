@@ -207,7 +207,7 @@ figure3 <- ggplot(data = armplot.df) +
   guides(fill = guide_legend(title = NULL)) +
   geom_abline(slope = b1, intercept = b0, size = 1.5) +
   geom_abline(slope = 1, intercept = 0, linetype = 'dashed', size = 1) +
-  geom_point(data = center.df, aes(x = x, y = y), colour = 'green', size = 10) +
+  geom_point(data = center.df, aes(x = x, y = y), colour = 'green', shape = 4, size = 10) +
   scale_x_continuous(labels = math_format(exp^.x)) +
   scale_y_continuous(labels = math_format(exp^.x)) +
   xlab('Control Group Dose') +
@@ -226,6 +226,7 @@ save(figure3, file="Figs/Figure3.Rdata")
 Figure3Final <- figure3 + theme_bw() + xlim(0.25, 5.77) +ylim(-.105, 5.5)  
 ggsave(Figure3Final, file = "Figs/Figure3Final.png", device ="png",
        scale = 1, width = 8, height = 4,dpi = 300, limitsize = TRUE)
+Figure3Final
 ```
 
 
