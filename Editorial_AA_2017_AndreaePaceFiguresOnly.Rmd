@@ -215,9 +215,9 @@ figure3 <- ggplot(data = armplot.df) +
   ylab('Acetaminophen Group Dose') +
   geom_point(data = xy.df,
              aes(x = Ctl, y = Exp, alpha = 0.1, size = 1, colour = 'grey', fill = Ctl)) +
-  guides(fill = guide_legend(title = NULL)) +
-    theme(legend.position = 'none')
-
+  guides(fill = "none", color = "none", shape = "legend", size ="none", alpha = "none") + 
+  # choose a simple background
+  theme_bw()
 save(figure3, file="Figs/Figure3.Rdata")
 ```
 
