@@ -210,8 +210,8 @@ figure3 <- ggplot(data = armplot.df) +
   geom_abline(slope = 1, intercept = 0, linetype = 'dashed', size = 1) +
   geom_point(data = center.df, aes(x = x, y = y), colour = 'green', shape = 4, size = 10) +
   # render with x and y axis limits
-  scale_x_continuous(labels = math_format(exp^.x), limits = c(0.25, 5.77)) +
-  scale_y_continuous(labels = math_format(exp^.x), limits = c(-.105, 5.5)) +
+  scale_x_continuous(labels = math_format(exp^.x), sec.axis = ~exp(.), limits = c(0.25, 5.77)) +
+  scale_y_continuous(labels = math_format(exp^.x), sec.axis = ~exp(.), limits = c(-.105, 5.5)) +
   xlab('Control Group Dose') +
   ylab('Acetaminophen Group Dose') +
   geom_point(data = xy.df,
@@ -234,6 +234,12 @@ figure3
 ```
 
 
+### Secondary axis
+```{r, secondary axis}
+p <- ggplot(mtcars, aes(cyl, mpg)) +
+  geom_point()
+p + scale_y_continuous(sec.axis = ~exp(.))
+```
 ### Figure 3 Caption
 
 L'Abbe plot investigates the heterogeneity between studies using the ratio of means, as a *relative* measure, plotting the mean in the experimental versus the control group for each study, (on the logarithmic scale). Studies are color coded by surgery group and sized by the weight studies were given in the meta-regression. Studies below the dashed diagonal demonstrated benefit. Studies are sprayed around the black regression line, which has almost a slope of one, as this meta-regression explains only 2% of the between study variability. Hence baseline risk does not explain between-study differences in mean morphine reductions, when outcomes are expressed as a ratio of means.
