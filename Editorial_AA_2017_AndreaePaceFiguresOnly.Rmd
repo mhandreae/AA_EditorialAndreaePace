@@ -209,10 +209,8 @@ figure3 <- ggplot(data = armplot.df) +
   geom_abline(slope = b1, intercept = b0, size = 1.5) +
   geom_abline(slope = 1, intercept = 0, linetype = 'dashed', size = 1) +
   geom_point(data = center.df, aes(x = x, y = y), colour = 'green', shape = 4, size = 10) +
-  scale_x_continuous(labels = math_format(exp^.x), sec.axis = ~exp(.), limits = c(0.25, 5.77)) +
-  scale_y_continuous(labels = math_format(exp^.x), sec.axis = ~exp(.), limits = c(-.105, 5.5)) +
-  xlab('Control Group Dose') +
-  ylab('Acetaminophen Group Dose') +
+  scale_x_continuous('Control Group Dose [mg]', breaks = c(0, 1, 2, 3, 4), labels = math_format(exp^.x),  sec.axis = sec_axis(~exp(.), breaks =c(1,10,20,40,60,100)), limits = c(0.25, 5.77)) +
+  scale_y_continuous('Acetaminophen Group Dose [mg]',breaks = c(0, 1, 2, 3, 4), labels = math_format(exp^.x), sec.axis = sec_axis(~exp(.), breaks =c(1,10,20,40,60,100)), limits = c(-.105, 5.5)) +
   geom_point(data = xy.df,
              aes(x = Ctl, y = Exp, alpha = 0.1, size = 1, colour = 'grey', fill = Ctl)) +
   guides(fill = "none", color = "none", shape = "legend", size ="none", alpha = "none") + 
@@ -229,7 +227,6 @@ ggsave(figure3, file = "Figs/Figure3Final.pdf", device ="pdf",
        scale = 1, width = 8, height = 4,dpi = 300, limitsize = TRUE)
 figure3
 ```
-
 
 ### Figure 3 Caption
 
