@@ -136,7 +136,7 @@ Fig_b <- Fig_a + labs(x = "baseline morphine consumption in control group [mg]",
 
 # choose a simple background and render
 Fig_b + theme_bw() # choose a simple background and render
-ggsave("Schematic.tif", device = "tiff", width = 6, 
+ggsave("Figs/Schematic.pdf", device = "pdf", width = 6, 
        height = 3, units = "in", dpi = 400)
 
 ```
