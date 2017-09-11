@@ -223,13 +223,11 @@ save(figure3, file="Figs/Figure3.Rdata")
 
 
 ```{r, Figure3, fig.width=8, fig.height=4, eval=TRUE}
-# choose a simple background and render with x and y axis limits
-Figure3Final <- figure3 + theme_bw() + xlim(0.25, 5.77) +ylim(-.105, 5.5)  
-ggsave(Figure3Final, file = "Figs/Figure3Final.png", device ="png",
+ggsave(figure3, file = "Figs/Figure3Final.png", device ="png",
        scale = 1, width = 8, height = 4,dpi = 300, limitsize = TRUE)
-ggsave(Figure3Final, file = "Figs/Figure3Final.pdf", device ="pdf",
+ggsave(figure3, file = "Figs/Figure3Final.pdf", device ="pdf",
        scale = 1, width = 8, height = 4,dpi = 300, limitsize = TRUE)
-Figure3Final
+figure3
 ```
 
 
