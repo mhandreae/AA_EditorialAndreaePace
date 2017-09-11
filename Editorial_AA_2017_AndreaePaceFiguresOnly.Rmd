@@ -209,8 +209,8 @@ figure3 <- ggplot(data = armplot.df) +
   geom_abline(slope = b1, intercept = b0, size = 1.5) +
   geom_abline(slope = 1, intercept = 0, linetype = 'dashed', size = 1) +
   geom_point(data = center.df, aes(x = x, y = y), colour = 'green', shape = 4, size = 10) +
-  scale_x_continuous(labels = math_format(exp^.x)) +
-  scale_y_continuous(labels = math_format(exp^.x)) +
+  scale_x_continuous(labels = math_format(exp^.x), sec.axis = ~exp(.), limits = c(0.25, 5.77)) +
+  scale_y_continuous(labels = math_format(exp^.x), sec.axis = ~exp(.), limits = c(-.105, 5.5)) +
   xlab('Control Group Dose') +
   ylab('Acetaminophen Group Dose') +
   geom_point(data = xy.df,
