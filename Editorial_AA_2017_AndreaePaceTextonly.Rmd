@@ -25,6 +25,11 @@ Michael Andreae, MD, Address: Department of Anesthesiology, Department of Anesth
 We would like to acknowledge Doleman et al for providing the data to generate the figures.
 
 ##### Conflicts of Interest: None
+
+##### Author Contributions
+Michael Andreae: This author helped to conceive the outline and to write the first draft of the editorial. This author helped to conceive and render the figures for the initial submission. This author helped to revised the editorial with Dr. Pace. This author helped to plan, discuss and interpret the meta-regression and corresponding figure with Dr. Pace. Dr. Andreae had access to the data used in the analysis and has read the final submitted manuscript. 
+Nathan Pace: This author helped to discuss and revise the manuscript with Dr. Andreae in the editorial process, in particular with regards to the reviewer suggestions. This author helped to investigate the effect of a relative measure instead of an absolute measure and to fit a the meta-regression for acetaminophen. Dr. Pace had access to the data used in the analysis and has read the final submitted manuscript.
+
 **Number of words in this Editorial (1598), Figures (2)**
 
 ##### Keywords:
